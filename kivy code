@@ -1,0 +1,164 @@
+# .kv is a stylesheet language for kivy applications
+<cookiegrid>
+
+    # pass variables from .kv to python script
+    cookietext: cookietext
+    name: name
+    datetime: datetime
+    notepad: notepad
+    myimage: myimage
+
+    daily: daily
+    tsouvelas: tsouvelas
+    unbox:unbox
+
+
+    # define the whole grid
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        
+        # split whole grid in 4 sections (rows)
+        GridLayout:
+            cols:1
+            rows:4
+            # split first row into 2 columns
+            GridLayout:
+                cols:2
+                rows:1
+
+                row_default_height: 40
+                row_force_default: True
+                # color the backround as a rectangle fill
+                background_color: (255/255, 251/255, 233/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                # add label widget
+                Label:
+                    text: "Anti-Fortune Cookie"
+                    color: (153/255, 51/255, 0)
+                    font_size: 30
+                    size_hint: 0.2, 0.1
+                    
+
+                Label:
+                    id: datetime
+                    text: ""
+                    size_hint: 0.3, 0.1
+                    color: (153/255, 51/255, 0)
+                    font_size: 20
+                    
+            # split the second row into 3 columns
+            GridLayout:
+                cols:3
+                rows:1
+
+                col_default_width: 350
+                col_default_height: 350
+                col_force_default: True
+
+                # split first column into 3 columns
+                GridLayout:
+                    cols:3
+                    rows:1
+                    
+                    # add buttons in images to open relevant link when pressed
+                    Button:
+                        on_press: root.link1()
+                        background_normal: './assets/daily.png'  
+                        id: daily
+                        name: 'daily'
+                    Button:
+                        on_press: root.link2()
+                        background_normal: './assets/tsouvelas.png'
+                        id: tsouvelas
+                    Button:
+                        on_press: root.link3()
+                        background_normal: './assets/unbox.png'
+                        id: unbox
+
+                TextInput:
+                    id: notepad  
+                    text: "Notepad"
+
+                GridLayout:
+                    cols:1
+                    rows:3
+
+                    row_default_width: 50
+                    row_default_height: 50
+                    row_force_default: True
+
+                    col_default_width: 100
+                    col_default_height: 100
+                    col_force_default: True
+
+                    Button:
+                        text: 'Save'
+                        on_press: app.save(notepad.text)
+                        background_color: 153/255, 51/255, 0, 1
+                    
+                    Button:
+                        text: 'Clear'
+                        on_press: app.clear(notepad)
+                        background_color: 153/255, 51/255, 0, 1
+
+                    Button:
+                        text: "Exit"
+                        on_press: app.stop() 
+                        background_color: 255/255, 40/255, 0, 1
+
+
+            GridLayout:
+                cols:1
+                rows:2 
+
+                TextInput:
+                    text: "Enter your First Name here..."
+                    id: name  
+                    # clear text on click
+                    on_touch_down: self.text = ""
+
+                Button:
+                    text: "Open the Cookie!"
+                    on_press: root.btn(), root.showimg()
+                    background_color: 153/255, 51/255, 0, 1
+
+            GridLayout:
+                cols:2
+                rows:1
+
+                col_default_width: 650
+                col_default_height: 350
+                col_force_default: True
+
+                Label:
+                    text: ""
+                    id: cookietext
+                    font_size: 25
+                    color: (153/255, 51/255, 0)
+                    # color the backround as a rectangle fill
+                    background_color: (255/255, 251/255, 233/255, 1)
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+            
+                GridLayout:
+                    rows:1
+
+                    col_default_width: 150
+                    col_default_height: 350
+                    col_force_default: True
+
+                    Image:
+                        id: myimage
+                        source: ""
+                        allow_stretch: True
